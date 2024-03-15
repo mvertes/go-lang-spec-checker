@@ -1,0 +1,18 @@
+name: Parscan Spec Checks
+
+on:
+    workflow_dispatch:
+    schedule:
+      - cron: "0 0 * * *"
+permissions:
+  contents: read
+  actions: read
+  checks: write
+jobs:
+  test:
+    uses: ./.github/workflows/template.yaml
+    with:
+      name: Parscan
+      run-command: '-count=1 -v ./... -args -run-cmd="parscan {path}"'
+      need-extra-binaries: true
+      extra-binaries-install: go install github.com/mvertes/parscan@latest
